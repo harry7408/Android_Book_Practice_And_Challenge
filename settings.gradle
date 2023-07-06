@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "JPUB_Practice"
-include ':app'
+include ':GeoQuiz'
+include ':Criminalintent'
