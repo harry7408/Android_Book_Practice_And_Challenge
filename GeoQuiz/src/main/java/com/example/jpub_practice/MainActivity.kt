@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Spannable.Factory
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.jpub_practice.databinding.ActivityMainBinding
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlin.math.roundToInt
@@ -36,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /* ViewModelProvider 를 통해 viewModel 과 연결 가능
+        *  get( [] ) 을 통해 QuizViewModel 인스턴스를 반환한다
+        *  장치 구성이 변경되어(회전 등) 새로운 Activity 가 생성되어도 기존 QuizViewModel 인스턴스가 반환된다*/
+        val quizViewModel : QuizViewModel =
+            ViewModelProvider(this)[QuizViewModel::class.java]
+        Log.d(TAG,"GOT QuizViewModel $quizViewModel")
 
         /* 초기 문제 설정 */
         initQuestion()

@@ -22,6 +22,8 @@
 
     <string name="previous_button_error">첫번째 문제입니다</string>
 
+    <string name="viewModel_init_message">뷰모델이 생성되었음</string>
+
 
 
 

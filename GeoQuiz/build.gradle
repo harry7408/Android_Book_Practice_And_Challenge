@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
 
 android {
@@ -46,4 +47,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     /* fancy Toast 를 위한 의존성 추가 */
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
