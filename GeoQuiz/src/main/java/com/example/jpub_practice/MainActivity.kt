@@ -14,18 +14,15 @@ class MainActivity : AppCompatActivity() {
     companion object {
         /* 현업에서는 상수 값은 대문자로만 구성하긴 함 */
         private const val TAG="MainActivity"
+        private const val KEY_INDEX="INDEX"
     }
 
     private lateinit var binding : ActivityMainBinding
-    private var currentIndex=0
-    private val questionBank= listOf<Question>(
-        Question(R.string.question1,answer=true, isChecked = false),
-        Question(R.string.question2, answer = true, isChecked = false),
-        Question(R.string.question3, answer = false, isChecked = false),
-        Question(R.string.question4, answer = false, isChecked = false),
-        Question(R.string.question5, answer = true, isChecked = false),
-        Question(R.string.question6, answer = true, isChecked = false),
-    )
+
+    /* by lazy 를 통해 늦 초기화 (사용되기 전 까지 초기화를 늦춘다) */
+    private val quizViewModel : QuizViewModel by lazy {
+        ViewModelProvider(this)[QuizViewModel::class.java]
+    }
 
     /* 점수 출력을 위한 변수 */
     private var solvedCount=0
@@ -36,13 +33,19 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG,getString(R.string.onCreate_message))
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        /* 종료되기 전 문제를 문제 index 를 가져와 저장해둔다
+        *  null 이면 첫번째 문제가 나오도록 */
+        val currentIndex=savedInstanceState?.getInt(KEY_INDEX,0) ?: 0
+
+        quizViewModel.currentIndex=currentIndex
 
         /* ViewModelProvider 를 통해 viewModel 과 연결 가능
         *  get( [] ) 을 통해 QuizViewModel 인스턴스를 반환한다
         *  장치 구성이 변경되어(회전 등) 새로운 Activity 가 생성되어도 기존 QuizViewModel 인스턴스가 반환된다*/
-        val quizViewModel : QuizViewModel =
-            ViewModelProvider(this)[QuizViewModel::class.java]
-        Log.d(TAG,"GOT QuizViewModel $quizViewModel")
+//        val quizViewModel : QuizViewModel =
+//            ViewModelProvider(this)[QuizViewModel::class.java]
+//        Log.d(TAG,"GOT QuizViewModel $quizViewModel")
 
         /* 초기 문제 설정 */
         initQuestion()
@@ -59,46 +62,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.nextButton.setOnClickListener {
-            gotoNextQuestion()
+            quizViewModel.moveToNext()
+            initQuestion()
             refreshButton()
             showUserScore()
         }
 
         binding.questionTextView.setOnClickListener {
-            gotoNextQuestion()
+            quizViewModel.moveToNext()
+            initQuestion()
             refreshButton()
         }
 
         binding.previousButton.setOnClickListener {
-            gotoPreviousQuestion()
+            quizViewModel.moveToPrevious()
+            initQuestion()
             refreshButton()
         }
 
     }
-
-    private fun gotoNextQuestion() {
-        /* 숫자를 계속 늘리기만하면 안된다 */
-        currentIndex=(currentIndex+1) % questionBank.size
-        initQuestion()
-    }
-
-    private fun gotoPreviousQuestion() {
-        if (currentIndex==0) {
-            FancyToast.makeText(this,getString(R.string.previous_button_error)
-                ,FancyToast.LENGTH_SHORT,FancyToast.ERROR,false).show()
-        }
-        else currentIndex=(currentIndex-1)%questionBank.size
-        initQuestion()
-    }
-
+    /* 이 함수가 버튼 눌릴때 마다 호출 되어야 한다 */
     private fun initQuestion() {
-        val questionTextResId=questionBank[currentIndex].textResId
+        val questionTextResId=quizViewModel.currentQuestionText
         binding.questionTextView.text=resources.getText(questionTextResId)
     }
 
     private fun checkAnswer (userAnswer:Boolean) {
-        val correctAnswer=questionBank[currentIndex].answer
-        questionBank[currentIndex].isChecked=true
+        val correctAnswer=quizViewModel.currentQuestionAnswer
+        quizViewModel.checkSolved()
         solvedCount++
 
         if (userAnswer==correctAnswer) {
@@ -112,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshButton() {
-        if (questionBank[currentIndex].isChecked) {
+        if (quizViewModel.currentQuestionChecked) {
             binding.trueButton.apply {
                 isEnabled=false
                 alpha=0.5f
@@ -134,7 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showUserScore() {
-        if (solvedCount==questionBank.size) {
+        if (solvedCount==quizViewModel.currentQuestionSize) {
             FancyToast.makeText(this
                 , "점수는 ${((correctCount.toDouble()/6.0)*100).roundToInt()}% 입니다"
                 ,FancyToast.LENGTH_SHORT, FancyToast.INFO,false).show()
@@ -165,5 +156,12 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG,getString(R.string.onDestroy_message))
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d(TAG,getString(R.string.onSavedInstanceSate_message))
+        
+        outState.putInt(KEY_INDEX,quizViewModel.currentIndex)
     }
 }

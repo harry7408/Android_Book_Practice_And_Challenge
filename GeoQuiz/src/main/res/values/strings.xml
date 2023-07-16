@@ -19,6 +19,7 @@
     <string name="onPause_message">onPause() Called</string>
     <string name="onStop_message">onStop() Called</string>
     <string name="onDestroy_message">onDestroy() Called</string>
+    <string name="onSavedInstanceSate_message">onSavedInstanceSate() Called</string>
 
     <string name="previous_button_error">첫번째 문제입니다</string>
 
