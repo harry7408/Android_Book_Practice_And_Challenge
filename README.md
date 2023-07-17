@@ -28,3 +28,12 @@
 >## Chapter 4
 > - 챌린지 없음
 > - MVVM 아키텍쳐의 컴포넌트인 ViewModel 관련 반복 학습이 필요해 보인다
+>
+
+>## Chapter 5
+> - 챌린지 없음
+> - **디버깅 관련 Chapter로 반복학습 필요**
+> - LogCat 잘 활용하기 (Error 레벨 -> fatal exception 검색)</br>
+   ※ Caused by로 표시된 마지막 예외와 작성한 코드를 참조하는 스택기록의 첫번째줄 잘 살펴보기</br>
+   ※ 오작동 진단을 위해서 Log.d, e 등 다양한 로그 수준의 메세지 활용 / BreakPoint 활용
+ 
