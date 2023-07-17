@@ -1,5 +1,6 @@
 package com.example.jpub_practice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable.Factory
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         /* 현업에서는 상수 값은 대문자로만 구성하긴 함 */
         private const val TAG="MainActivity"
         private const val KEY_INDEX="INDEX"
+        private const val ANSWER="Answer"
     }
 
     private lateinit var binding : ActivityMainBinding
@@ -30,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG,getString(R.string.onCreate_message))
         binding=ActivityMainBinding.inflate(layoutInflater)
+        Log.d(TAG,getString(R.string.onCreate_message))
         setContentView(binding.root)
         
         /* 종료되기 전 문제를 문제 index 를 가져와 저장해둔다
@@ -58,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         binding.falseButton.setOnClickListener {
             checkAnswer(false)
             refreshButton()
-
         }
 
         binding.nextButton.setOnClickListener {
@@ -80,7 +81,13 @@ class MainActivity : AppCompatActivity() {
             refreshButton()
         }
 
+        binding.cheatButton.setOnClickListener {
+            val currentAnswer=quizViewModel.currentQuestionAnswer
+            val intent=CheatActivity.newIntent(this,currentAnswer)
+            startActivity(intent)
+        }
     }
+
     /* 이 함수가 버튼 눌릴때 마다 호출 되어야 한다 */
     private fun initQuestion() {
         val questionTextResId=quizViewModel.currentQuestionText
@@ -161,7 +168,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d(TAG,getString(R.string.onSavedInstanceSate_message))
-        
         outState.putInt(KEY_INDEX,quizViewModel.currentIndex)
     }
 }

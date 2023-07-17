@@ -41,21 +41,32 @@
         app:layout_constraintHorizontal_bias="0.65"
         android:text="@string/false_text"/>
 
+    <Button
+        android:id="@+id/cheatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheat_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trueButton"
+        android:layout_marginTop="16dp"/>
+
+
     <ImageView
         android:id="@+id/previousButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/ic_baseline_arrow_back_36"
-        app:layout_constraintEnd_toEndOf="@+id/trueButton"
-        app:layout_constraintTop_toBottomOf="@id/trueButton" />
+        app:layout_constraintStart_toStartOf="@+id/cheatButton"
+        app:layout_constraintTop_toBottomOf="@id/cheatButton" />
 
     <ImageView
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/falseButton"
-        app:layout_constraintTop_toTopOf="@id/previousButton"
-        android:src="@drawable/ic_baseline_arrow_forward_36"/>
+        android:src="@drawable/ic_baseline_arrow_forward_36"
+        app:layout_constraintEnd_toEndOf="@+id/cheatButton"
+        app:layout_constraintTop_toTopOf="@id/previousButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
