@@ -1,12 +1,13 @@
 package com.example.jpub_practice
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.jpub_practice.databinding.ActivityCheatBinding
 
-
+const val EXTRA_ANSWER_SHOWN="CHEATED"
 class CheatActivity : AppCompatActivity() {
 
     private lateinit var binding :ActivityCheatBinding
@@ -21,14 +22,22 @@ class CheatActivity : AppCompatActivity() {
 
         binding.AnswerButton.setOnClickListener {
             binding.answerTextView.text=answerIsTrue.toString()
+            setAnswerShownResult(true)
         }
+    }
+
+    private fun setAnswerShownResult(isAnswerShown: Boolean) {
+        val data=Intent().apply {
+            putExtra(EXTRA_ANSWER_SHOWN,isAnswerShown)
+        }
+        setResult(Activity.RESULT_OK,data)
     }
 
     companion object {
         private const val ANSWER="Answer"
         fun newIntent(packageContext: Context, answerIsTrue: Boolean) : Intent {
             return Intent(packageContext,CheatActivity::class.java).apply {
-                putExtra(ANSWER,answerIsTrue)
+                putExtra(ANSWER, answerIsTrue)
             }
         }
     }

@@ -22,6 +22,9 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     }*/
 
     var currentIndex=0
+    var isCheater=false
+
+
     private val questionBank= listOf<Question>(
         Question(R.string.question1,answer=true, isChecked = false),
         Question(R.string.question2, answer = true, isChecked = false),

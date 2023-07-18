@@ -1,11 +1,13 @@
 package com.example.jpub_practice
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable.Factory
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.example.jpub_practice.databinding.ActivityMainBinding
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -14,33 +16,45 @@ import kotlin.math.roundToInt
 class MainActivity : AppCompatActivity() {
     companion object {
         /* 현업에서는 상수 값은 대문자로만 구성하긴 함 */
-        private const val TAG="MainActivity"
-        private const val KEY_INDEX="INDEX"
-        private const val ANSWER="Answer"
+        private const val TAG = "MainActivity"
+        private const val KEY_INDEX = "INDEX"
+        private const val ANSWER = "Answer"
+        private const val REQUEST_CODE_CHEAT = 0
+        private const val CHEAT_FLAG = "CHEATING"
     }
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     /* by lazy 를 통해 늦 초기화 (사용되기 전 까지 초기화를 늦춘다) */
-    private val quizViewModel : QuizViewModel by lazy {
+    private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this)[QuizViewModel::class.java]
     }
 
     /* 점수 출력을 위한 변수 */
-    private var solvedCount=0
-    private var correctCount=0
+    private var solvedCount = 0
+    private var correctCount = 0
+
+    private val checkCheating = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val isCheated = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        if (result.resultCode == Activity.RESULT_OK && isCheated) {
+            quizViewModel.isCheater = true
+//           warnCheating()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityMainBinding.inflate(layoutInflater)
-        Log.d(TAG,getString(R.string.onCreate_message))
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        Log.d(TAG, getString(R.string.onCreate_message))
         setContentView(binding.root)
-        
+
         /* 종료되기 전 문제를 문제 index 를 가져와 저장해둔다
         *  null 이면 첫번째 문제가 나오도록 */
-        val currentIndex=savedInstanceState?.getInt(KEY_INDEX,0) ?: 0
+        val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
 
-        quizViewModel.currentIndex=currentIndex
+        quizViewModel.currentIndex = currentIndex
 
         /* ViewModelProvider 를 통해 viewModel 과 연결 가능
         *  get( [] ) 을 통해 QuizViewModel 인스턴스를 반환한다
@@ -52,8 +66,9 @@ class MainActivity : AppCompatActivity() {
         /* 초기 문제 설정 */
         initQuestion()
 
+
         binding.trueButton.setOnClickListener {
-           checkAnswer(true)
+            checkAnswer(true)
             refreshButton()
         }
 
@@ -67,92 +82,117 @@ class MainActivity : AppCompatActivity() {
             initQuestion()
             refreshButton()
             showUserScore()
+            refreshCheating()
         }
 
         binding.questionTextView.setOnClickListener {
             quizViewModel.moveToNext()
             initQuestion()
             refreshButton()
+            refreshCheating()
         }
 
         binding.previousButton.setOnClickListener {
             quizViewModel.moveToPrevious()
             initQuestion()
             refreshButton()
+            refreshCheating()
         }
 
         binding.cheatButton.setOnClickListener {
-            val currentAnswer=quizViewModel.currentQuestionAnswer
-            val intent=CheatActivity.newIntent(this,currentAnswer)
-            startActivity(intent)
+            val currentAnswer = quizViewModel.currentQuestionAnswer
+            val intent = CheatActivity.newIntent(this, currentAnswer)
+            /* startActivityForResult deprecated */
+            checkCheating.launch(intent)
         }
     }
 
     /* 이 함수가 버튼 눌릴때 마다 호출 되어야 한다 */
     private fun initQuestion() {
-        val questionTextResId=quizViewModel.currentQuestionText
-        binding.questionTextView.text=resources.getText(questionTextResId)
+        val questionTextResId = quizViewModel.currentQuestionText
+        binding.questionTextView.text = resources.getText(questionTextResId)
     }
 
-    private fun checkAnswer (userAnswer:Boolean) {
-        val correctAnswer=quizViewModel.currentQuestionAnswer
+    private fun checkAnswer(userAnswer: Boolean) {
+        val correctAnswer = quizViewModel.currentQuestionAnswer
         quizViewModel.checkSolved()
         solvedCount++
 
-        if (userAnswer==correctAnswer) {
-            FancyToast.makeText(this,resources.getText(R.string.correct_answer)
-                ,FancyToast.LENGTH_LONG,FancyToast.SUCCESS,false).show()
-            correctCount++
-        } else {
-            FancyToast.makeText(this,resources.getText(R.string.false_answer)
-                ,FancyToast.LENGTH_LONG,FancyToast.ERROR ,false).show()
+        val message = when {
+            quizViewModel.isCheater -> R.string.judgment_toast
+            userAnswer == correctAnswer -> {
+                R.string.correct_answer
+                correctCount++
+            }
+            else -> R.string.false_answer
         }
+        FancyToast.makeText(
+            this, resources.getString(message), FancyToast.LENGTH_LONG, FancyToast.DEFAULT, false
+        ).show()
     }
 
     private fun refreshButton() {
         if (quizViewModel.currentQuestionChecked) {
             binding.trueButton.apply {
-                isEnabled=false
-                alpha=0.5f
+                isEnabled = false
+                alpha = 0.5f
             }
             binding.falseButton.apply {
-                isEnabled=false
-                alpha=0.5f
+                isEnabled = false
+                alpha = 0.5f
             }
         } else {
             binding.trueButton.apply {
-                isEnabled=true
-                alpha=1.0f
+                isEnabled = true
+                alpha = 1.0f
             }
             binding.falseButton.apply {
-                isEnabled=true
-                alpha=1.0f
+                isEnabled = true
+                alpha = 1.0f
             }
+        }
+    }
+
+    private fun refreshCheating() {
+        quizViewModel.isCheater = false
+    }
+
+    private fun warnCheating() {
+        if (quizViewModel.isCheater) {
+            FancyToast.makeText(
+                this, getString(R.string.judgment_toast),
+                FancyToast.LENGTH_SHORT, FancyToast.ERROR, false
+            ).show()
         }
     }
 
     private fun showUserScore() {
-        if (solvedCount==quizViewModel.currentQuestionSize) {
-            FancyToast.makeText(this
-                , "점수는 ${((correctCount.toDouble()/6.0)*100).roundToInt()}% 입니다"
-                ,FancyToast.LENGTH_SHORT, FancyToast.INFO,false).show()
+        if (solvedCount == quizViewModel.currentQuestionSize) {
+            FancyToast.makeText(
+                this,
+                "점수는 ${((correctCount.toDouble() / 6.0) * 100).roundToInt()}% 입니다",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.INFO,
+                false
+            ).show()
         }
     }
+
 
     /* 생명주기 함수들 override */
     override fun onStart() {
         super.onStart()
-        Log.d(TAG,getString(R.string.onStart_message))
+        Log.d(TAG, getString(R.string.onStart_message))
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG,getString(R.string.onResume_message))
+        Log.d(TAG, getString(R.string.onResume_message))
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG,getString(R.string.onPause_message))
+        Log.d(TAG, getString(R.string.onPause_message))
     }
 
     override fun onStop() {
@@ -162,12 +202,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG,getString(R.string.onDestroy_message))
+        Log.d(TAG, getString(R.string.onDestroy_message))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Log.d(TAG,getString(R.string.onSavedInstanceSate_message))
-        outState.putInt(KEY_INDEX,quizViewModel.currentIndex)
+        Log.d(TAG, getString(R.string.onSavedInstanceSate_message))
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
 }
