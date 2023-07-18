@@ -36,4 +36,12 @@
 > - LogCat 잘 활용하기 (Error 레벨 -> fatal exception 검색)</br>
    ※ Caused by로 표시된 마지막 예외와 작성한 코드를 참조하는 스택기록의 첫번째줄 잘 살펴보기</br>
    ※ 오작동 진단을 위해서 Log.d, e 등 다양한 로그 수준의 메세지 활용 / BreakPoint 활용
+
+>## Chapter 6
+> - 챌린지 1 : 허점 보완하기 -> 화면 회전 시 컨닝한 결과 사라짐</br>
+  \-
+> - 챌린지 2 : 문제마다 커닝 여부 관리하기 -> 한 문제만 커닝해도 모든 문제의 답은 커닝으로 간주한 것 해결하기</br>
+  \-</br>
+ ※ chapter 6의 startActivityForResult()는 Deprecated 되었으므로 registerForActivityResult()를 사용했음 </br>
+  -> onActivityResult()를 오버라이드 하여 결과값을 가져오는데 Activity가 메모리 부족 문제 등으로 사라지면 가져올 수 없기 때문에 Deprecated 되었다
  
