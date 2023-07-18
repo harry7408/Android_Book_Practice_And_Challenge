@@ -1,5 +1,5 @@
-# Android_With_Kotlin_Book
-코틀린을 활용한 안드로이드 책 내용 실습</br>
+# Android_Book_Practice_And_Challenge
+실무에 바로적용하는 안드로이드 4판 실습 및 챌린지</br>
 
  **책의 개념은 따로 적지 않고 어떻게 챌린지 문제를 해결하였는지 Readme에 작성**
 
