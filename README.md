@@ -39,9 +39,11 @@
 
 >## Chapter 6
 > - 챌린지 1 : 허점 보완하기 -> 화면 회전 시 컨닝한 결과 사라짐</br>
-  \-
+  \- 
 > - 챌린지 2 : 문제마다 커닝 여부 관리하기 -> 한 문제만 커닝해도 모든 문제의 답은 커닝으로 간주한 것 해결하기</br>
-  \-</br>
+  \- QuizViewModel에 isCheated 변수 선언 후 CheatActivity에서 커닝하면 registerForActivityResult의 결과로 isCheated=true로 설정 후</br>
+  &nbsp;&nbsp;버튼 refresh와 마찬가지로 QuizViewModel의 isCheated 값을 refreshCheating() 함수를 통해 false로 상태를 바꿔주었다.</br></br>
+    Ref) 퀴즈 점수 측정 시 커닝한 경우는 정답 횟수에 포함시키지 않았다.</br></br>
  ※ chapter 6의 startActivityForResult()는 Deprecated 되었으므로 registerForActivityResult()를 사용했음 </br>
   -> onActivityResult()를 오버라이드 하여 결과값을 가져오는데 Activity가 메모리 부족 문제 등으로 사라지면 가져올 수 없기 때문에 Deprecated 되었다
  
