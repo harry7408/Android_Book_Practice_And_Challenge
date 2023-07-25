@@ -6,7 +6,7 @@
 >## Chapter 1
 > - 챌린지 1 : Toast 커스터마이징</br>
 >    \- API 30 이상부터는 Toast 메세지에 setGravity 등의 속성이 막혔다</br>
->     : 이를 FancyToast 라이브러리로 대체하여 토스트 메세지 출력
+>     : 위치 변경은 고려하지 않고 FancyToast 라이브러리로 대체하여 토스트 메세지를 출력
 
 >## Chapter 2
 > - 챌린지 1 : TextView에 리스너 추가하기</br>
