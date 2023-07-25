@@ -22,7 +22,8 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     }*/
 
     var currentIndex=0
-    var isCheater=false
+    var isCheated=false
+
 
 
     private val questionBank= listOf<Question>(
@@ -62,6 +63,4 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     fun checkSolved() {
         questionBank[currentIndex].isChecked=true
     }
-
-
 }

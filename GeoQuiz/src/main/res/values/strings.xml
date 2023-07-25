@@ -30,5 +30,14 @@
     <string name="cheat_button">커닝하기!</string>
     <string name="judgment_toast">커닝은 나쁜 짓이죠</string>
 
+    <string name="cheat_onCreate_message">CheatActivity onCreate() Called</string>
+    <string name="cheat_onStart_message">CheatActivity onStart() Called</string>
+    <string name="cheat_onResume_message">CheatActivity onResume() Called</string>
+    <string name="cheat_onPause_message">CheatActivity onPause() Called</string>
+    <string name="cheat_onStop_message">CheatActivity onStop() Called</string>
+    <string name="cheat_onDestroy_message">CheatActivity onDestroy() Called</string>
+    <string name="cheat_onSavedInstanceSate_message">CheatActivity onSavedInstanceSate() Called</string>
+
+
 
 </resources>

@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
         /* 현업에서는 상수 값은 대문자로만 구성하긴 함 */
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "INDEX"
-        private const val ANSWER = "Answer"
-        private const val REQUEST_CODE_CHEAT = 0
-        private const val CHEAT_FLAG = "CHEATING"
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -34,13 +31,15 @@ class MainActivity : AppCompatActivity() {
     private var solvedCount = 0
     private var correctCount = 0
 
+    /**
+     * StartActivityForResult 대체
+     */
     private val checkCheating = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val isCheated = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         if (result.resultCode == Activity.RESULT_OK && isCheated) {
-            quizViewModel.isCheater = true
-//           warnCheating()
+            quizViewModel.isCheated = true
         }
     }
 
@@ -98,11 +97,12 @@ class MainActivity : AppCompatActivity() {
             refreshButton()
             refreshCheating()
         }
-
+        /**
+         * startActivityForResult : Deprecated
+         */
         binding.cheatButton.setOnClickListener {
             val currentAnswer = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this, currentAnswer)
-            /* startActivityForResult deprecated */
             checkCheating.launch(intent)
         }
     }
@@ -119,15 +119,18 @@ class MainActivity : AppCompatActivity() {
         solvedCount++
 
         val message = when {
-            quizViewModel.isCheater -> R.string.judgment_toast
-            userAnswer == correctAnswer -> {
-                R.string.correct_answer
-                correctCount++
-            }
+            quizViewModel.isCheated -> R.string.judgment_toast
+            userAnswer == correctAnswer -> R.string.correct_answer
             else -> R.string.false_answer
         }
+        if (message == R.string.correct_answer) {
+            correctCount++
+        }
+
         FancyToast.makeText(
-            this, resources.getString(message), FancyToast.LENGTH_LONG, FancyToast.DEFAULT, false
+            this, resources.getString(message),
+            FancyToast.LENGTH_LONG,
+            FancyToast.DEFAULT, false
         ).show()
     }
 
@@ -154,16 +157,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshCheating() {
-        quizViewModel.isCheater = false
-    }
-
-    private fun warnCheating() {
-        if (quizViewModel.isCheater) {
-            FancyToast.makeText(
-                this, getString(R.string.judgment_toast),
-                FancyToast.LENGTH_SHORT, FancyToast.ERROR, false
-            ).show()
-        }
+        quizViewModel.isCheated = false
     }
 
     private fun showUserScore() {
