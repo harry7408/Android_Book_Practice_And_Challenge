@@ -47,5 +47,23 @@
   &nbsp;&nbsp;버튼 refresh와 마찬가지로 QuizViewModel의 isCheated 값을 refreshCheating() 함수를 통해 false로 상태를 바꿔주었다.</br></br>
     Ref) 퀴즈 점수 측정 시 커닝한 경우는 정답 횟수에 포함시키지 않았다.</br></br>
  ※ chapter 6의 startActivityForResult()는 Deprecated 되었으므로 registerForActivityResult()를 사용했음 </br>
-  -> onActivityResult()를 오버라이드 하여 결과값을 가져오는데 Activity가 메모리 부족 문제 등으로 사라지면 가져올 수 없기 때문에 Deprecated 되었다
+  -> onActivityResult()를 오버라이드 하여 결과값을 가져오는데 Activity가 메모리 부족 문제 등으로 사라지면 가져올 수 없기 때문에 Deprecated 되었다<br></br>
+
+> ## Chapter 7
+> - 챌린지 1 : 장치의 안드로이드 버전 보여주기
+ \- Build.VERSION.SDK_INT으로 현재 build.gradle에 있는 targetSDK 버전 숫자를 가져올 수 있다 (Build.VERSION.SDK 는 deprecated 되었다)<br></br>
+> - 챌린지 2 : 커닝 횟수 제한하기
+ \- cheatCount 변수를 초기에 3으로 두어 registerForActivity의 결과로 커닝한 여부를 체크하는 영역에서 cheatCount를 1 감소하여 커닝 했을때만 숫자가 감소되도록 했다.<br></br>
+
+> ※ GeoQuiz를 마무리하며
+>  - 3장의 생명주기, 4장의 ViewModel (MVVM 아키텍쳐의 중요 요소), 5장의 디버깅 부분 적어도 이 3파트의 내용은 잘 챙기기<br></br>
+>  - 7장의 안드로이드 버전은 추후 개발 실력이 향상되면 조금 더 자세히 학습할 필요가 있어보인다.<br></br>
+단순히 책의 실습만 하기 보다는 챌린지를 풀고 내 방식대로 바꿔가며 개발 문서도 찾고 구글링 하는 과정에서 실력이 향상된다 느꼈다. 특히 Chapter 6의 챌린지 1은 매우 시간을 오래잡아 먹어서 기억에 많이 남는다.</br>
+챌린지를 다 했지만 허점이 조금 보이긴 한다 (커닝을 하고 다음문제 갔다가 다시 돌아오면 커닝 횟수는 차감되지만 커닝 여부가 사라진다) 그러나 할게 많기 때문에 이정도로 마무리 짓고 CriminalIntent로 넘어간다.<br></br>
+
+# CriminalIntent
+> ## Chapter 8
+
+
+ 
  
