@@ -2,10 +2,8 @@ package com.example.jpub_practice
 
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.jpub_practice.databinding.ActivityCheatBinding
 
 const val EXTRA_ANSWER_SHOWN = "CHEATED"
-private const val CHANGE_FLAG = "CHANGED"
-private const val BUTTON_FLAG = "BUTTON_CLICKED"
 private const val TAG = "CheatActivity"
 
 class CheatActivity : AppCompatActivity() {
@@ -52,8 +48,6 @@ class CheatActivity : AppCompatActivity() {
             setTextColor(getColor(R.color.purple_500))
             textSize = 15.0f
         }
-
-
     }
 
     private fun setAnswerShownResult() {
@@ -103,6 +97,10 @@ class CheatActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * MainActivity 에서 CheatActivity 가 Intent 의 extra 로 무엇을 받는지 알 필요 없다
+    =>동반 객체에 인텐트를 요청하는 코드를 별도의 함수로 캡슐화
+     */
     companion object {
         private const val ANSWER = "Answer"
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
@@ -113,6 +111,3 @@ class CheatActivity : AppCompatActivity() {
     }
 }
 
-
-/* MainActivity 에서 CheatActivity 가 Intent 의 extra 로 무엇을 받는지 알 필요 없다
- =>동반 객체에 인텐트를 요청하는 코드를 별도의 함수로 캡슐화 */

@@ -10,46 +10,46 @@
         android:id="@+id/warningTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.4"
+        android:padding="24dp"
         android:text="@string/warning_text"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:padding="24dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
 
     <TextView
         android:id="@+id/answerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/warningTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="정답나오는 부분"
+        android:layout_marginTop="12dp"
         android:textSize="15sp"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/warningTextView"
+        tools:text="정답나오는 부분" />
 
     <Button
         android:id="@+id/AnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/answerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
-        android:text="@string/show_answer_button"/>
+        android:text="@string/show_answer_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTextView" />
 
     <TextView
         android:id="@+id/androidVersionTextView"
-        app:layout_constraintTop_toBottomOf="@id/AnswerButton"
-        app:layout_constraintStart_toStartOf="@id/AnswerButton"
-        app:layout_constraintEnd_toEndOf="@id/AnswerButton"
-        android:layout_marginTop="16dp"
-        tools:text="버전"
-        android:gravity="center"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/AnswerButton"
+        app:layout_constraintStart_toStartOf="@id/AnswerButton"
+        app:layout_constraintTop_toBottomOf="@id/AnswerButton"
+        tools:text="버전" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

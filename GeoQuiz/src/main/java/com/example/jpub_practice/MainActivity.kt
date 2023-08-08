@@ -1,14 +1,10 @@
 package com.example.jpub_practice
 
 import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spannable.Factory
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.jpub_practice.databinding.ActivityMainBinding
@@ -17,31 +13,28 @@ import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        /* 현업에서는 상수 값은 대문자로만 구성하긴 함 */
         private const val TAG = "MainActivity"
         private const val KEY_INDEX = "INDEX"
     }
 
     private lateinit var binding: ActivityMainBinding
 
-    /* by lazy 를 통해 늦 초기화 (사용되기 전 까지 초기화를 늦춘다) */
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProvider(this)[QuizViewModel::class.java]
     }
 
-    /* 점수 출력을 위한 변수 */
     private var solvedCount = 0
     private var correctCount = 0
-    private var cheatCount=3
+    private var cheatCount = 3
 
     /**
-     * StartActivityForResult 대체
+     * StartActivityForResult 으로 대체 (deprecated 된 함수 사용 지양하기 위해)
      */
     private val checkCheating = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val isCheated = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
-        Log.e(TAG,"${result.data} + $isCheated")
+        Log.e(TAG, "${result.data} + $isCheated")
         if (result.resultCode == Activity.RESULT_OK && isCheated) {
             quizViewModel.isCheated = true
             cheatCount--
@@ -54,20 +47,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, getString(R.string.onCreate_message))
         setContentView(binding.root)
 
-        /* 종료되기 전 문제를 문제 index 를 가져와 저장해둔다
-        *  null 이면 첫번째 문제가 나오도록 */
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
 
         quizViewModel.currentIndex = currentIndex
 
-        /* ViewModelProvider 를 통해 viewModel 과 연결 가능
-        *  get( [] ) 을 통해 QuizViewModel 인스턴스를 반환한다
-        *  장치 구성이 변경되어(회전 등) 새로운 Activity 가 생성되어도 기존 QuizViewModel 인스턴스가 반환된다*/
-//        val quizViewModel : QuizViewModel =
-//            ViewModelProvider(this)[QuizViewModel::class.java]
-//        Log.d(TAG,"GOT QuizViewModel $quizViewModel")
-
-        /* 초기 문제 설정 */
         initQuestion()
         initCheatCount()
 
@@ -108,19 +91,18 @@ class MainActivity : AppCompatActivity() {
             initCheatCount()
         }
         /**
-         * startActivityForResult : Deprecated
+         * startActivityForResult : Deprecated (위에 주석 달린 부분으로 대체)
          */
-        binding.cheatButton.setOnClickListener { view->
+        binding.cheatButton.setOnClickListener { view ->
             val currentAnswer = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this, currentAnswer)
-            val options=ActivityOptionsCompat.makeClipRevealAnimation(
-                view,0,0,view.width, view.height
+            val options = ActivityOptionsCompat.makeClipRevealAnimation(
+                view, 0, 0, view.width, view.height
             )
-            checkCheating.launch(intent,options)
+            checkCheating.launch(intent, options)
         }
     }
 
-    /* 이 함수가 버튼 눌릴때 마다 호출 되어야 한다 */
     private fun initQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
         binding.questionTextView.text = resources.getText(questionTextResId)
@@ -174,17 +156,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun forbidCheat() {
-        if (cheatCount==0) {
+        if (cheatCount == 0) {
             binding.cheatButton.apply {
-                isEnabled=false
-                alpha=0.5f
+                isEnabled = false
+                alpha = 0.5f
             }
         }
     }
 
     private fun initCheatCount() {
         binding.cheatCountTextView.apply {
-            text=getString(R.string.cheat_count,cheatCount)
+            text = getString(R.string.cheat_count, cheatCount)
         }
     }
 
@@ -200,8 +182,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    /* 생명주기 함수들 override */
     override fun onStart() {
         super.onStart()
         Log.d(TAG, getString(R.string.onStart_message))

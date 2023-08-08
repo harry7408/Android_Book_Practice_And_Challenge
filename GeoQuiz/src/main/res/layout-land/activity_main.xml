@@ -1,84 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/question1"
+        android:layout_marginTop="24dp"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/question1" />
 
     <Button
         android:id="@+id/trueButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
+        android:text="@string/true_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionTextView"
         app:layout_constraintHorizontal_bias="0.44"
-        android:text="@string/true_text"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
     <Button
         android:id="@+id/falseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
+        android:text="@string/false_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionTextView"
         app:layout_constraintHorizontal_bias="0.6"
-        android:text="@string/false_text"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
     <Button
         android:id="@+id/cheatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/cheat_button"
         app:layout_constraintEnd_toEndOf="@+id/falseButton"
         app:layout_constraintStart_toStartOf="@+id/trueButton"
-        app:layout_constraintTop_toBottomOf="@id/trueButton"
-        android:text="@string/cheat_button"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintTop_toBottomOf="@id/trueButton" />
 
     <TextView
         android:id="@+id/cheatCountTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cheatButton"
-        app:layout_constraintStart_toStartOf="@id/cheatButton"
-        app:layout_constraintEnd_toEndOf="@id/cheatButton"
-        android:gravity="center"
         android:layout_marginTop="8dp"
-        android:textColor="@color/black"/>
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/cheatButton"
+        app:layout_constraintStart_toStartOf="@id/cheatButton"
+        app:layout_constraintTop_toBottomOf="@id/cheatButton" />
 
     <ImageView
         android:id="@+id/previousButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="24dp"
         android:src="@drawable/ic_baseline_arrow_back_36"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/nextButton"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="12dp"
-         />
+        app:layout_constraintEnd_toStartOf="@id/nextButton" />
 
     <ImageView
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
-        android:src="@drawable/ic_baseline_arrow_forward_36"/>
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/ic_baseline_arrow_forward_36"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

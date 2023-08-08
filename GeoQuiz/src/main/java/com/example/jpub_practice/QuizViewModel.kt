@@ -9,22 +9,21 @@ import kotlin.coroutines.coroutineContext
 
 private const val TAG="QuizViewModel"
 class QuizViewModel(application: Application) : AndroidViewModel(application) {
-    /* 초기화 여부 확인 하는 방법 */
-    /* init {
-        *//* 초기화 블럭 내부는 인스턴스 생성 시 자동으로 실행 된다 *//*
+    /** 초기화 여부 확인 하는 방법
+     init {
+         초기화 블럭 내부는 인스턴스 생성 시 자동으로 실행 된다
         Log.d(TAG, "ViewModel 초기화")
     }
 
-    *//* 인스턴스 소멸되기 전에 호출되는 함수 -> 리소스 반환할 게 있거나 하면 여기서 처리 *//*
+    인스턴스 소멸되기 전에 호출되는 함수 -> 리소스 반환할 게 있거나 하면 여기서 처리
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "ViewModel 파괴")
-    }*/
+    }
+    */
 
     var currentIndex=0
     var isCheated=false
-
-
 
     private val questionBank= listOf<Question>(
         Question(R.string.question1,answer=true, isChecked = false),
