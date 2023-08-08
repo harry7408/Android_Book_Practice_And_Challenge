@@ -1,8 +1,8 @@
 # Android_Book_Practice_And_Challenge
 실무에 바로적용하는 안드로이드 4판 실습 및 챌린지</br>
 
- **책의 개념은 따로 적지 않고 어떻게 챌린지 문제를 해결하였는지 Readme에 작성**
-
+ **책의 개념은 따로 적지 않고 어떻게 챌린지 문제를 해결하였는지 Readme에 작성**</br>
+# GeoQuiz
 >## Chapter 1
 > - 챌린지 1 : Toast 커스터마이징</br>
 >    \- API 30 이상부터는 Toast 메세지에 setGravity 등의 속성이 막혔다</br>
@@ -38,8 +38,10 @@
    ※ 오작동 진단을 위해서 Log.d, e 등 다양한 로그 수준의 메세지 활용 / BreakPoint 활용
 
 >## Chapter 6
-> - 챌린지 1 : 허점 보완하기 -> 화면 회전 시 컨닝한 결과 사라짐</br>
-  \- 
+> - 챌린지 1 : 허점 보완하기 -> 화면 회전 시 컨닝한 결과 사라짐&nbsp;&nbsp; \* **ViewModel, ActivityResult, 생명주기를 더 깊게 공부해야할 듯 싶다** \*</br>
+  \- CheatViewModel을 만들어 buttonFlag를 두고 컨닝한 여부를 관리해 주었다. </br></br>
+    화면 회전을 해서 ActivityResult에 계속 null 값이 넘어와 한참을 삽질했는데 cheatActivity의 onCreate() 부분에서 setAnswerShownResult() 함수를 호출해줘 해결할 수 있었다</br></br>
+    ※ 화면 회전 후 setResult 부분이 호출되지 않고 날라갔기 때문에 계속 null이 넘어온 것 같다.<br></br>
 > - 챌린지 2 : 문제마다 커닝 여부 관리하기 -> 한 문제만 커닝해도 모든 문제의 답은 커닝으로 간주한 것 해결하기</br>
   \- QuizViewModel에 isCheated 변수 선언 후 CheatActivity에서 커닝하면 registerForActivityResult의 결과로 isCheated=true로 설정 후</br>
   &nbsp;&nbsp;버튼 refresh와 마찬가지로 QuizViewModel의 isCheated 값을 refreshCheating() 함수를 통해 false로 상태를 바꿔주었다.</br></br>
