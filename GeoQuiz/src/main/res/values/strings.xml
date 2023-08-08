@@ -38,6 +38,7 @@
     <string name="cheat_onDestroy_message">CheatActivity onDestroy() Called</string>
     <string name="cheat_onSavedInstanceSate_message">CheatActivity onSavedInstanceSate() Called</string>
 
-
+    <string name="sdk_version">API 레벨 %2d</string>
+    <string name="cheat_count">남은 컨닝 횟수 : %d</string>
 
 </resources>

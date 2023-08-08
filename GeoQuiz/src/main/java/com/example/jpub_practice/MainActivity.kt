@@ -1,6 +1,7 @@
 package com.example.jpub_practice
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.text.Spannable.Factory
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.jpub_practice.databinding.ActivityMainBinding
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     /* 점수 출력을 위한 변수 */
     private var solvedCount = 0
     private var correctCount = 0
+    private var cheatCount=3
 
     /**
      * StartActivityForResult 대체
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         Log.e(TAG,"${result.data} + $isCheated")
         if (result.resultCode == Activity.RESULT_OK && isCheated) {
             quizViewModel.isCheated = true
+            cheatCount--
         }
     }
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         /* 초기 문제 설정 */
         initQuestion()
-
+        initCheatCount()
 
         binding.trueButton.setOnClickListener {
             checkAnswer(true)
@@ -83,6 +87,8 @@ class MainActivity : AppCompatActivity() {
             refreshButton()
             showUserScore()
             refreshCheating()
+            forbidCheat()
+            initCheatCount()
         }
 
         binding.questionTextView.setOnClickListener {
@@ -90,6 +96,8 @@ class MainActivity : AppCompatActivity() {
             initQuestion()
             refreshButton()
             refreshCheating()
+            forbidCheat()
+            initCheatCount()
         }
 
         binding.previousButton.setOnClickListener {
@@ -97,14 +105,18 @@ class MainActivity : AppCompatActivity() {
             initQuestion()
             refreshButton()
             refreshCheating()
+            initCheatCount()
         }
         /**
          * startActivityForResult : Deprecated
          */
-        binding.cheatButton.setOnClickListener {
+        binding.cheatButton.setOnClickListener { view->
             val currentAnswer = quizViewModel.currentQuestionAnswer
             val intent = CheatActivity.newIntent(this, currentAnswer)
-            checkCheating.launch(intent)
+            val options=ActivityOptionsCompat.makeClipRevealAnimation(
+                view,0,0,view.width, view.height
+            )
+            checkCheating.launch(intent,options)
         }
     }
 
@@ -159,6 +171,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshCheating() {
         quizViewModel.isCheated = false
+    }
+
+    private fun forbidCheat() {
+        if (cheatCount==0) {
+            binding.cheatButton.apply {
+                isEnabled=false
+                alpha=0.5f
+            }
+        }
+    }
+
+    private fun initCheatCount() {
+        binding.cheatCountTextView.apply {
+            text=getString(R.string.cheat_count,cheatCount)
+        }
     }
 
     private fun showUserScore() {

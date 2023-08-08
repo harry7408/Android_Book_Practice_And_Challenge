@@ -51,6 +51,18 @@
         app:layout_constraintTop_toBottomOf="@+id/trueButton"
         android:layout_marginTop="16dp"/>
 
+    <TextView
+        android:id="@+id/cheatCountTextView"
+        app:layout_constraintTop_toBottomOf="@id/cheatButton"
+        app:layout_constraintStart_toStartOf="@id/cheatButton"
+        app:layout_constraintEnd_toEndOf="@id/cheatButton"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        tools:text="컨닝 횟수 : "/>
+
 
     <ImageView
         android:id="@+id/previousButton"
@@ -59,7 +71,7 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_baseline_arrow_back_36"
         app:layout_constraintStart_toStartOf="@+id/cheatButton"
-        app:layout_constraintTop_toBottomOf="@id/cheatButton" />
+        app:layout_constraintTop_toBottomOf="@id/cheatCountTextView" />
 
     <ImageView
         android:id="@+id/nextButton"
@@ -68,5 +80,7 @@
         android:src="@drawable/ic_baseline_arrow_forward_36"
         app:layout_constraintEnd_toEndOf="@+id/cheatButton"
         app:layout_constraintTop_toTopOf="@id/previousButton" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
