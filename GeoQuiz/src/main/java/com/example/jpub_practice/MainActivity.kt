@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val isCheated = result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        Log.e(TAG,"${result.data} + $isCheated")
         if (result.resultCode == Activity.RESULT_OK && isCheated) {
             quizViewModel.isCheated = true
         }
