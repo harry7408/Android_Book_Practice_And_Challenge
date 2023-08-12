@@ -63,6 +63,10 @@
 
 # CriminalIntent
 > ## Chapter 8
+>- 챌린지 없음
+>- Fragment 의 생명주기에 대한 학습 필요
+
+> ## Chapter 9
 
 
  
