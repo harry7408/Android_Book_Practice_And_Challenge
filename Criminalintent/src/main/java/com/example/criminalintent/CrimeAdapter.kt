@@ -29,10 +29,6 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
         return crimes.size
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (crimes[position].requiresPolice) POLICE else NO_POLICE
-    }
-
     inner class CrimeViewHolder(private val binding: ItemCrimeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Crime) {
