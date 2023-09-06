@@ -1,7 +1,10 @@
 package com.example.criminalintent
 
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.criminalintent.databinding.ItemCrimeBinding
 import com.example.criminalintent.databinding.ItemCrimePoliceBinding
@@ -15,10 +18,16 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CrimeAdapter.CrimeViewHolder {
-        return CrimeViewHolder(
-            ItemCrimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+    ): CrimeViewHolder {
+        return when (viewType) {
+            POLICE -> PoliceViewHolder(
+                ItemCrimePoliceBinding
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+            else -> NoPoliceViewHolder(
+                ItemCrimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: CrimeViewHolder, position: Int) {
@@ -33,9 +42,14 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
         return if (crimes[position].requiresPolice) POLICE else NO_POLICE
     }
 
-    inner class CrimeViewHolder(private val binding: ItemCrimeBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Crime) {
+    open inner class CrimeViewHolder(view: View) :
+        RecyclerView.ViewHolder(view) {
+        open fun bind(item: Crime) {}
+    }
+
+    inner class PoliceViewHolder(private val binding: ItemCrimePoliceBinding) :
+        CrimeViewHolder(binding.root) {
+        override fun bind(item: Crime) {
             binding.crimeNumberTextView.text = item.title.toString()
             binding.occurredDateTextView.text = item.date.toString()
             binding.root.setOnClickListener {
@@ -43,6 +57,21 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
             }
         }
     }
+
+    inner class NoPoliceViewHolder(private val binding: ItemCrimeBinding) :
+        CrimeViewHolder(binding.root) {
+        override fun bind(item: Crime) {
+            binding.crimeNumberTextView.text = item.title.toString()
+            binding.occurredDateTextView.text = item.date.toString()
+            binding.root.setOnClickListener {
+                onClick(item)
+            }
+        }
+    }
+
 }
+
+
+
 
 

@@ -6,4 +6,5 @@
     <string name="crime_solved_label">해결됨</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="police_button_text">112</string>
 </resources>
