@@ -67,7 +67,8 @@
 >- Fragment 의 생명주기에 대한 학습 필요
 
 > ## Chapter 9
->- 챌린지 1 : </br>
+>- 챌린지 1 : 기본으로 CrimeViewHolder를 하나 만든 후 심각한 범죄 -> PoliceViewHolder, 평범한 범죄 -> NoPoliceViewHolder에 담아 </br>
+    onCreateViewHolder의 View Type에 따라 when문으로 구분하여 ViewHolder을 생성했다.
 >- 자주 사용되는 RecyclerView에 대한 Chapter이다 그냥 외울 정도로 연습하는 것이 답인 것 같다.</br>
 >- 이 앱부터는 챌린지 기능은 별도의 Branch에 구현할 예정이다 (책의 실습 내용과 챌린지가 겹치면 CH12에서 에러가 났다..)
 
