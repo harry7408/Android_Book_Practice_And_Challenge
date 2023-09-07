@@ -1,11 +1,10 @@
 package com.example.criminalintent
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.criminalintent.databinding.ItemCrimeBinding
-import com.example.criminalintent.databinding.ItemCrimePoliceBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 private const val POLICE = 100
 private const val NO_POLICE = 200
@@ -34,6 +33,11 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
         fun bind(item: Crime) {
             binding.crimeNumberTextView.text = item.title.toString()
             binding.occurredDateTextView.text = item.date.toString()
+            binding.crimeImageView.visibility= if (item.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
             binding.root.setOnClickListener {
                 onClick(item)
             }

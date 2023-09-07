@@ -7,17 +7,32 @@
 
     <TextView
         android:id="@+id/crimeNumberTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/crimeImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:gravity="start"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/occurredDateTextView"
         app:layout_constraintTop_toBottomOf="@id/crimeNumberTextView"
         app:layout_constraintStart_toStartOf="@id/crimeNumberTextView"
+        app:layout_constraintEnd_toEndOf="@id/crimeNumberTextView"
         android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"/>
+
+    <ImageView
+        android:id="@+id/crimeImageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_solved"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="12dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
