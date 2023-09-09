@@ -70,7 +70,11 @@
 >- 챌린지 1 : 기본으로 CrimeViewHolder를 하나 만든 후 심각한 범죄 -> PoliceViewHolder, 평범한 범죄 -> NoPoliceViewHolder에 담아 </br>
     onCreateViewHolder의 View Type에 따라 when문으로 구분하여 ViewHolder을 생성했다.
 >- 자주 사용되는 RecyclerView에 대한 Chapter이다 그냥 외울 정도로 연습하는 것이 답인 것 같다.</br>
->- 이 앱부터는 챌린지 기능은 별도의 Branch에 구현할 예정이다 (책의 실습 내용과 챌린지가 겹치면 CH12에서 에러가 났다..)
+>- 이 앱부터는 챌린지 기능은 별도의 Branch에 구현할 예정이다 (책의 실습 내용과 챌린지가 겹치면 CH12에서 에러가 났다..)<br></br>
 
+>## Chapter 10
+>- 챌린지 1 : 날짜 형식을 조금 변형하여 화면에 띄우기</br>
+\- DateFormat의 format 메소드에 출력할 형식과 date를 전달하거나</br> DateFormat을 상속한 SimpleDateFormat에 출력할 형식, 지역을 입력으로 생성하고 format 함수로 date를 전달하는 2가지 방법이 있다. (후자 선택)</br>
+※ 이번 chapter는 처음부터 ConstraintLayout으로 화면을 구성하여 수정할 사항이 별로 없었다 
  
  
