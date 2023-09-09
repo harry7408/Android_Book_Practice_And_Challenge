@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.criminalintent.databinding.ItemCrimeBinding
 
-private const val POLICE = 100
-private const val NO_POLICE = 200
 
 class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit) :
     RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
