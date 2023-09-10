@@ -3,12 +3,23 @@ package com.example.criminalintent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.criminalintent.databinding.ItemCrimeBinding
 
 
 class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit) :
-    RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
+    ListAdapter<Crime, CrimeAdapter.CrimeViewHolder>(object: DiffUtil.ItemCallback<Crime>() {
+        override fun areItemsTheSame(oldItem: Crime, newItem: Crime): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Crime, newItem: Crime): Boolean {
+            return oldItem == newItem
+        }
+
+    }) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

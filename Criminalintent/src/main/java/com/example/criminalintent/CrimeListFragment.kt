@@ -55,6 +55,7 @@ class CrimeListFragment : Fragment() {
             callbacks?.onCrimeSelected(it.id)
         }
         binding.crimeRecyclerView.adapter = crimeAdapter
+        crimeAdapter?.submitList(crimes)
     }
 
     interface Callbacks {
