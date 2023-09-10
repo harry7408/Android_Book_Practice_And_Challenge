@@ -3,8 +3,11 @@ package com.example.criminalintent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.criminalintent.databinding.ActivityMainBinding
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+private const val TAG="MainActivity"
+
+class MainActivity : AppCompatActivity(), CrimeListFragment.Callbacks {
 
     private lateinit var binding : ActivityMainBinding
 
@@ -21,5 +24,13 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.fragment_container,fragment)
                 .commit()
         }
+    }
+
+    override fun onCrimeSelected(crimeId: UUID) {
+        val fragment=CrimeFragment.newInstance(crimeId)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container,fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
