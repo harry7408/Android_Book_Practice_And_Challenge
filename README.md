@@ -75,6 +75,10 @@
 >## Chapter 10
 >- 챌린지 1 : 날짜 형식을 조금 변형하여 화면에 띄우기</br>
 \- DateFormat의 format 메소드에 출력할 형식과 date를 전달하거나</br> DateFormat을 상속한 SimpleDateFormat에 출력할 형식, 지역을 입력으로 생성하고 format 함수로 date를 전달하는 2가지 방법이 있다. (후자 선택)</br>
-※ 이번 chapter는 처음부터 ConstraintLayout으로 화면을 구성하여 수정할 사항이 별로 없었다 
+※ 이번 chapter는 처음부터 ConstraintLayout으로 화면을 구성하여 수정할 사항이 별로 없었다 <br></br>
+
+>## Chapter 11
+>- 챌린지 없음</br>
+>- 자주 쓰이는 Room과 LiveData에 대한 Chapter
  
  
