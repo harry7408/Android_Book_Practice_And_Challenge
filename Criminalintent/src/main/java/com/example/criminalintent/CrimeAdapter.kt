@@ -43,4 +43,3 @@ class CrimeAdapter(private val crimes: List<Crime>, val onClick: (Crime) -> Unit
     }
 }
 
-

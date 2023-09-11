@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.view.ViewCompat.jumpDrawablesToCurrentState
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
@@ -15,8 +16,10 @@ import java.util.*
 
 private const val ARG_CRIME_ID = "crime_id"
 private const val TAG = "CrimeFragment"
+private const val DIALOG_DATE = "DialogDate"
+private const val REQUEST_DATE=0
 
-class CrimeFragment : Fragment() {
+class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
 
     private lateinit var binding: FragmentCrimeBinding
     private lateinit var crime: Crime
@@ -41,10 +44,6 @@ class CrimeFragment : Fragment() {
         binding = FragmentCrimeBinding.inflate(layoutInflater)
         titleField = binding.crimeTitle
 
-        binding.crimeDateButton.apply {
-            text = crime.date.toString()
-            isEnabled = false
-        }
         return binding.root
     }
 
@@ -78,6 +77,12 @@ class CrimeFragment : Fragment() {
                 crime.isSolved = isChecked
             }
         }
+        binding.crimeDateButton.setOnClickListener {
+            DatePickerFragment.newInstance(crime.date).apply {
+                setTargetFragment(this@CrimeFragment, REQUEST_DATE)
+                show(this@CrimeFragment.parentFragmentManager, DIALOG_DATE)
+            }
+        }
     }
 
     override fun onStop() {
@@ -87,11 +92,16 @@ class CrimeFragment : Fragment() {
 
     private fun updateUI() {
         titleField.setText(crime.title)
-        binding.crimeDateButton.text=crime.date.toString()
+        binding.crimeDateButton.text = crime.date.toString()
         binding.crimeSolvedCheckBox.apply {
-            isChecked=crime.isSolved
+            isChecked = crime.isSolved
             jumpDrawablesToCurrentState()
         }
+    }
+
+    override fun onDateSelected(date: Date) {
+        crime.date=date
+        updateUI()
     }
 
     companion object {
@@ -104,5 +114,7 @@ class CrimeFragment : Fragment() {
             }
         }
     }
+
+
 
 }
