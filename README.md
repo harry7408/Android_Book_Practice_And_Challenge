@@ -70,7 +70,7 @@
 >- 챌린지 1 : 기본으로 CrimeViewHolder를 하나 만든 후 심각한 범죄 -> PoliceViewHolder, 평범한 범죄 -> NoPoliceViewHolder에 담아 </br>
     onCreateViewHolder의 View Type에 따라 when문으로 구분하여 ViewHolder을 생성했다.
 >- 자주 사용되는 RecyclerView에 대한 Chapter이다 그냥 외울 정도로 연습하는 것이 답인 것 같다.</br>
->- 이 앱부터는 챌린지 기능은 별도의 Branch에 구현할 예정이다 (책의 실습 내용과 챌린지가 겹치면 CH12에서 에러가 났다..)<br></br>
+>- 이 앱부터는 챌린지 기능은 별도의 Branch에 구현할 예정이다 (책의 실습 내용과 챌린지가 겹치면 CH11에서 에러가 났다..)<br></br>
 
 >## Chapter 10
 >- 챌린지 1 : 날짜 형식을 조금 변형하여 화면에 띄우기</br>
@@ -79,6 +79,17 @@
 
 >## Chapter 11
 >- 챌린지 없음</br>
->- 자주 쓰이는 Room과 LiveData에 대한 Chapter
+>- 자주 쓰이는 Room과 LiveData에 대한 Chapter<br></br>
+
+>## Chapter 12
+>- 챌린지 1 : RecyclerView를 ListAdapter로 상속받아 구현 (Diffutil을 활용)</br>
+&nbsp;&nbsp; 컨텐츠가 같은지, 아이템 자체가 같은지 비교하는 2개의 함수 오버라이딩 하면 된다 </br>
+※ 더 효율적으로 갣신하기 때문에 RecyclerView를 구현할 때 ListAdapter를 상속 받는 것이 좋아보인다<br></br>
+
+>## Chapter 13
+>- 챌린지 1 : 더 많은 대화상자 만들기</br>
+\- 실습에서 구현한 것과 비슷하게 Time을 Pick 하기 위한 Fragment를 하나 만들어 onCreateDialog에서 TimePickerDialog를 반환하도록 하였다</br>
+※ Dialog를 그냥 만들 수 있지만 화면 회전에 대비하여 Fragment로 만들고 FragmentManager가 관리하도록 하는 것이 좋다고 하나 이번 Chapter 실습에서 활용한 ```targetFragment 와 setTargetFragment```는 Deprecated 되었다
+
  
  
