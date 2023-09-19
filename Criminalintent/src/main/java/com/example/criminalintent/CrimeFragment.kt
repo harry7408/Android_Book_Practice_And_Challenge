@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.core.view.ViewCompat.jumpDrawablesToCurrentState
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.criminalintent.databinding.FragmentCrimeBinding
 import java.util.*
 
@@ -114,7 +113,4 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             }
         }
     }
-
-
-
 }
