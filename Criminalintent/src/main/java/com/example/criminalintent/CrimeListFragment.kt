@@ -35,13 +35,14 @@ class CrimeListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.new_crime -> {
-                val crime=Crime()
+                val crime = Crime()
                 crimeListViewModel.addCrime(crime)
                 callbacks?.onCrimeSelected(crime.id)
                 true
             }
+
             else -> {
                 return super.onOptionsItemSelected(item)
             }
@@ -67,9 +68,23 @@ class CrimeListFragment : Fragment() {
             Observer { crimes ->
                 crimes?.let {
                     Log.i(TAG, "Got Crimes ${crimes.size}")
-                    updateUI(crimes)
+                    if (crimes.isEmpty()) {
+                        removeRecyclerView()
+                    } else {
+                        showRecyclerView()
+                        updateUI(crimes)
+                    }
                 }
             })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.crimeAddButton.setOnClickListener {
+            val crime = Crime()
+            crimeListViewModel.addCrime(crime)
+            callbacks?.onCrimeSelected(crime.id)
+        }
     }
 
     private fun updateUI(crimes: List<Crime>) {
@@ -80,7 +95,7 @@ class CrimeListFragment : Fragment() {
     }
 
     interface Callbacks {
-        fun onCrimeSelected(crimeId:UUID)
+        fun onCrimeSelected(crimeId: UUID)
     }
 
     override fun onAttach(context: Context) {
@@ -96,6 +111,18 @@ class CrimeListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_crime_list, menu)
+    }
+
+    private fun showRecyclerView() {
+        binding.crimeRecyclerView.visibility = View.VISIBLE
+        binding.messageTextView.visibility = View.GONE
+        binding.crimeAddButton.visibility = View.GONE
+    }
+
+    private fun removeRecyclerView() {
+        binding.crimeRecyclerView.visibility = View.GONE
+        binding.messageTextView.visibility = View.VISIBLE
+        binding.crimeAddButton.visibility = View.VISIBLE
     }
 
     companion object {

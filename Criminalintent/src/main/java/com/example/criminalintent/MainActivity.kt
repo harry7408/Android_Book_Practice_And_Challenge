@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity(), CrimeListFragment.Callbacks {
         }
     }
 
+    /**
+     * TODO
+     *  Fragment 교체가 이루어 진다
+     * @param crimeId
+     */
     override fun onCrimeSelected(crimeId: UUID) {
         val fragment=CrimeFragment.newInstance(crimeId)
         supportFragmentManager.beginTransaction()
