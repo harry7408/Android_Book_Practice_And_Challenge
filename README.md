@@ -89,7 +89,13 @@
 >## Chapter 13
 >- 챌린지 1 : 더 많은 대화상자 만들기</br>
 \- 실습에서 구현한 것과 비슷하게 Time을 Pick 하기 위한 Fragment를 하나 만들어 onCreateDialog에서 TimePickerDialog를 반환하도록 하였다</br>
-※ Dialog를 그냥 만들 수 있지만 화면 회전에 대비하여 Fragment로 만들고 FragmentManager가 관리하도록 하는 것이 좋다고 하나 이번 Chapter 실습에서 활용한 ```targetFragment 와 setTargetFragment```는 Deprecated 되었다
+※ Dialog를 그냥 만들 수 있지만 화면 회전에 대비하여 Fragment로 만들고 FragmentManager가 관리하도록 하는 것이 좋다고 하나 이번 Chapter 실습에서 활용한 ```targetFragment 와 setTargetFragment```는 Deprecated 되었다<br></br>
+
+>## Chapter 14
+>- 챌린지 1 : 텅 빈 뷰를 갖는 RecyclerView</br>
+\- fragment_crime_list의 Root가 RecyclerView 였으나 이를 ConstraintLayout으로 바꾸고 textView와 button 하나를 추가하였다. onViewCreated 에서 Observer에 의해 관찰되는 Crime의 size가 isEmpty()라면 Text와 Button을 보여주고 비어있지 않다면 원래의 범죄 목록을 보여주도록 하였다 (visibility 속성의 View.VISIBLE, View.GONE)<br></br>
+버튼을 눌렀을 때 이벤트는 메뉴 Item 선택과 같이 Fragment 전환 및 추가로 쉽게 할 수 있었다.<br></br>
+※ ActionBar보다는 ToolBar 사용이 좋아보인다 (크기 조정과 같은 제약이 존재)
 
  
  
