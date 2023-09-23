@@ -21,4 +21,6 @@
     <string name="crime_report_subject">CriminalIntent 범죄 보고서</string>
     <string name="send_report">범죄 보고서 전송</string>
 
+    <string name="call_button">용의자에게 전화</string>
+
 </resources>

@@ -1,12 +1,16 @@
 package com.example.criminalintent
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds
+import android.provider.ContactsContract.Contacts
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
@@ -17,6 +21,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.util.CursorUtil.getColumnIndex
 import com.example.criminalintent.databinding.FragmentCrimeBinding
 import java.util.Date
 import java.util.UUID
@@ -33,6 +38,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var binding: FragmentCrimeBinding
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
+    private var suspectPhoneNumber: String = ""
 
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProvider(this)[CrimeDetailViewModel::class.java]
@@ -120,11 +126,19 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                     pickContactIntent,
                     PackageManager.MATCH_DEFAULT_ONLY
                 )
-            if (resolvedActivity==null) {
-                isEnabled=false
+            if (resolvedActivity == null) {
+//                isEnabled = false
             }
         }
 
+        binding.callButton.apply {
+            val pickContactIntent =
+                Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+
+            setOnClickListener {
+               startActivityForResult(pickContactIntent, REQUEST_CONTACT)
+            }
+        }
     }
 
     override fun onStop() {
@@ -145,6 +159,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
             resultCode != Activity.RESULT_OK -> return
@@ -152,11 +167,15 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             requestCode == REQUEST_CONTACT && data != null -> {
                 val contactUri: Uri = data.data ?: return
 
-                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+                val queryFields = arrayOf(
+                    ContactsContract.Contacts.DISPLAY_NAME,
+                    ContactsContract.Contacts._ID
+                )
 
                 val cursor = requireActivity().contentResolver
                     .query(contactUri, queryFields, null, null, null)
 
+                var currentId: String=""
                 cursor?.use {
                     if (it.count == 0) {
                         return
@@ -166,6 +185,22 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                     crime.suspect = suspect
                     crimeDetailViewModel.saveCrime(crime)
                     binding.crimeSuspectButton.text = suspect
+                   currentId=it.getString(1)
+                }
+
+                val phoneUri=CommonDataKinds.Phone.CONTENT_URI
+
+                val phoneQueryFields= arrayOf(currentId)
+
+                val phoneCursor=requireActivity().contentResolver
+                    .query(phoneUri,phoneQueryFields,null,null,null)
+
+                phoneCursor?.use {
+                    if (it.count==0) {
+                        return
+                    }
+                    it.moveToFirst()
+                    suspectPhoneNumber=it.getString(0)
                 }
             }
         }
