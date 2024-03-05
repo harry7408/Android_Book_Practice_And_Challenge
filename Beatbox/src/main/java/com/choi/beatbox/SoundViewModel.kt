@@ -3,9 +3,13 @@ package com.choi.beatbox
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
+import com.choi.beatbox.sounds.BeatBox
 import com.choi.beatbox.sounds.Sound
 
-class SoundViewModel : BaseObservable(){
+class SoundViewModel(private val beatBox: BeatBox) : BaseObservable(){
+    fun onButtonClicked() {
+        beatBox.play()
+    }
 
     var sound : Sound? = null
         set(sound) {
