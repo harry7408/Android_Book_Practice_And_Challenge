@@ -34,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        beatBox.release()
+    }
+
     private inner class SoundHolder(private val binding: ListItemSoundBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -68,6 +73,5 @@ class MainActivity : AppCompatActivity() {
             val sound = sounds[position]
             holder.bind(sound)
         }
-
     }
 }

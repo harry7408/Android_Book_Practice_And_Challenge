@@ -21,7 +21,7 @@ class SoundViewModelTest {
     fun setUp() {
         beatBox=mock(BeatBox::class.java)
         sound=Sound("assetPath")
-        subject= SoundViewModel()
+        subject= SoundViewModel(beatBox = beatBox)
         subject.sound=sound
     }
 

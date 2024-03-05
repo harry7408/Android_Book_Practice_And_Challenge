@@ -8,7 +8,9 @@ import com.choi.beatbox.sounds.Sound
 
 class SoundViewModel(private val beatBox: BeatBox) : BaseObservable(){
     fun onButtonClicked() {
-        beatBox.play()
+        sound?.let {
+            beatBox.play(it)
+        }
     }
 
     var sound : Sound? = null
