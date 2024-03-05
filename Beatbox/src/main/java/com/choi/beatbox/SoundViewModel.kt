@@ -6,20 +6,20 @@ import androidx.databinding.BindingAdapter
 import com.choi.beatbox.sounds.BeatBox
 import com.choi.beatbox.sounds.Sound
 
-class SoundViewModel(private val beatBox: BeatBox) : BaseObservable(){
+class SoundViewModel(private val beatBox: BeatBox) : BaseObservable() {
     fun onButtonClicked() {
         sound?.let {
             beatBox.play(it)
         }
     }
 
-    var sound : Sound? = null
+    var sound: Sound? = null
         set(sound) {
-            field=sound
+            field = sound
             notifyChange()
         }
 
     @get:Bindable
     val title: String?
         get() = sound?.name
- }
+}
