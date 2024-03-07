@@ -12,8 +12,8 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="128dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
         android:text="@{viewModel.title}"
-        android:onClick="@{()->viewModel.onButtonClicked()}"
-        android:layout_marginEnd="5dp" />
+        android:onClick="@{()->viewModel.onButtonClicked()}" />
 </layout>
