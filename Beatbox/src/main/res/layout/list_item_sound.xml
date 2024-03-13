@@ -4,16 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.choi.beatbox.SoundViewModel" />
     </data>
 
-    <com.google.android.material.button.MaterialButton
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:text="@{viewModel.title}"
-        android:onClick="@{()->viewModel.onButtonClicked()}" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:onClick="@{()->viewModel.onButtonClicked()}"
+            android:text="@{viewModel.title}" />
+    </FrameLayout>
+
+
 </layout>
