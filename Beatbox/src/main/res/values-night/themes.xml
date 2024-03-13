@@ -1,7 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.JPUB_Practice" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.JPUB_Practice" parent="Theme.AppCompat">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryVariant">@color/dark_red</item>
+        <item name="colorOnPrimary">@color/gray</item>
+        <item name="android:windowBackground">@color/snoothing_blue</item>
+        <item name="buttonStyle">@style/BeatBoxButton</item>
     </style>
+
+    <style name="Theme.JPUB_Practice" parent="Base.Theme.JPUB_Practice" />
+
 </resources>
